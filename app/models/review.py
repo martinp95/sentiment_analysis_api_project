@@ -19,6 +19,7 @@ class ReviewRequest(BaseModel):
         example="SKU-98765",
         description="Unique identifier for the product being reviewed.",
     )
+
     review: str = Field(
         ...,
         example="Absolutely loved the build quality and performance!",
