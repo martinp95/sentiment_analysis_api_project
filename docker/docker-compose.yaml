@@ -1,0 +1,32 @@
+services:
+  api:
+    build:
+      context: ..                       # contexto = raíz del proyecto
+      dockerfile: docker/Dockerfile    # Dockerfile dentro de /docker
+    container_name: sentiment-api
+    image: sentiment-api-images
+    ports:
+      - "8080:8000"
+    env_file:
+      - ../.env
+    depends_on:
+      - mongo
+    volumes:
+      - ../:/app
+    restart: always
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+
+  mongo:
+    image: mongo:8.0.6
+    container_name: sentiment-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin123
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+#transformers
+#scikit-learn
+#pandas
+#nltk
+#spacy
+motor
+python-dotenv
+loguru
+#mlflow
