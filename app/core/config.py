@@ -1,21 +1,23 @@
-"""App settings management using pydantic-settings."""
+"""Configuration module for environment and settings management."""
 
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
     """
-    Application configuration settings.
+    Application configuration loaded from environment variables.
 
     Attributes:
         mongo_uri (str): MongoDB connection URI.
         db_name (str): Name of the MongoDB database.
-        api_key (str): API key for authentication (to be used in headers).
+        api_key (str): API key used for authentication.
+        model_name (str): Hugging Face model identifier for sentiment analysis.
     """
 
     mongo_uri: str
     db_name: str
     api_key: str
+    model_name: str = "distilbert-base-uncased-finetuned-sst-2-english"
 
     class Config:
         env_file = ".env"

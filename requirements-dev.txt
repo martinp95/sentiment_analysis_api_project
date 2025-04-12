@@ -1,8 +1,8 @@
 -r requirements.txt
 
-pytest
-pytest-cov
-httpx
+#pytest
+#pytest-cov
+#httpx
 black
 isort
 flake8

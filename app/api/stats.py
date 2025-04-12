@@ -35,7 +35,7 @@ Returns the **sentiment distribution** for all reviews associated with a given p
 ```
 
 ### Note:
-This endpoint requires an API key
+- Authentication via API key (`X-API-Key`) is required
     """,
     responses={
         200: {"description": "Sentiment statistics successfully retrieved."},

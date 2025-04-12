@@ -2,9 +2,11 @@
 
 from contextlib import asynccontextmanager
 
+import torch
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 from motor.motor_asyncio import AsyncIOMotorClient
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 from app.api import health, sentiment, stats
 from app.core.config import settings
@@ -16,14 +18,28 @@ from app.db.mongo import get_mongo_client
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Async lifecycle context manager for FastAPI.
+    FastAPI application lifespan handler.
 
-    Initializes the MongoDB connection and injects it
-    into the shared context object for use in services.
+    This function is called on startup and shutdown of the app.
+
+    - Initializes MongoDB connection and stores it in the global context.
+    - Loads a pre-trained sentiment analysis model from HuggingFace Transformers.
+    - Sets device to CUDA (GPU) if available, otherwise CPU.
     """
+    # BD set up
     client: AsyncIOMotorClient = get_mongo_client()
     db = client[settings.db_name]
     context.db = db
+
+    # Load ML model
+    tokenizer = AutoTokenizer.from_pretrained(settings.model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(settings.model_name)
+    model.eval()
+
+    # Inject into global context
+    context.tokenizer = tokenizer
+    context.model = model
+    context.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     yield
 

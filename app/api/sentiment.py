@@ -15,18 +15,22 @@ router = APIRouter()
     response_model=ReviewResponse,
     status_code=status.HTTP_201_CREATED,
     tags=["Sentiment"],
-    summary="Analyze sentiment of a product review",
+    summary="Analyze the sentiment of a product review",
     description="""
-Analyze the **sentiment** of a product review and store the result.
+Analyze the **sentiment** of a product review and store the result in the database.
 
-**Returns:**
-- `sentiment`: `positive`, `neutral`, or `negative`
-- `confidence`: float (between 0.0 and 1.0)
+### Input:
+- `review` (string): The textual content of the review
+- `product_id` (string): The ID of the product being reviewed
 
-**Notes:**
-- The prediction is currently based on a mock model.
-- Results are stored in the database with review text and product ID.
-- Requires authentication via API key (`X-API-Key`).
+### Output:
+- `sentiment`: One of `"positive"`, `"neutral"`, or `"negative"`
+- `confidence`: A float between `0.0` and `1.0` representing prediction certainty
+
+### Notes:
+- The sentiment prediction is powered by a real transformer-based model (`DistilBERT`)
+- Reviews and predictions are stored in the database for later analysis
+- Authentication via API key (`X-API-Key`) is required
 """,
     responses={
         201: {"description": "Sentiment successfully analyzed and saved."},
@@ -44,7 +48,6 @@ async def predict_sentiment(payload: ReviewRequest) -> ReviewResponse:
 
     Args:
         payload (ReviewRequest): The review content and product ID.
-        request (Request): FastAPI request object to access app state.
 
     Returns:
         ReviewResponse: The predicted sentiment and confidence score.
