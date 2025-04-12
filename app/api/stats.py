@@ -17,15 +17,33 @@ router = APIRouter()
     summary="Get sentiment stats by product",
     tags=["Sentiment"],
     description="""
-    Retrieve the sentiment distribution (positive/neutral/negative)
-    for all reviews associated with a given product.
+Returns the **sentiment distribution** for all reviews associated with a given product.
+
+**Path parameter:**
+- `product_id`: The ID of the product to compute stats for
+
+**Returns:**
+- Proportions of `positive`, `neutral`, and `negative` sentiments
+
+**Example response:**
+```json
+{
+  "positive": 0.70,
+  "neutral": 0.15,
+  "negative": 0.15
+}
+```
+
+### Note:
+This endpoint requires an API key
     """,
     responses={
-        200: {"description": "Statistics successfully retrieved."},
+        200: {"description": "Sentiment statistics successfully retrieved."},
         404: {
             "model": ErrorResponse,
             "description": "No reviews found for this product.",
         },
+        401: {"model": ErrorResponse, "description": "Missing or invalid API key."},
     },
     dependencies=[Depends(verify_api_key)],
 )

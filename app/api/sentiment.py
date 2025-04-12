@@ -17,12 +17,17 @@ router = APIRouter()
     tags=["Sentiment"],
     summary="Analyze sentiment of a product review",
     description="""
-    Analyze the sentiment of a review written by a user for a given product.
-    The response includes a sentiment label (`positive`, `neutral`, `negative`) and a confidence score.
-    The sentiment is currently predicted using a mock model,
-    but the API is ready for integration with a production NLP model.
-    Each result is stored in the database along with the review text and associated product ID.
-    """,
+Analyze the **sentiment** of a product review and store the result.
+
+**Returns:**
+- `sentiment`: `positive`, `neutral`, or `negative`
+- `confidence`: float (between 0.0 and 1.0)
+
+**Notes:**
+- The prediction is currently based on a mock model.
+- Results are stored in the database with review text and product ID.
+- Requires authentication via API key (`X-API-Key`).
+""",
     responses={
         201: {"description": "Sentiment successfully analyzed and saved."},
         400: {

@@ -13,19 +13,20 @@ router = APIRouter()
     tags=["Health"],
     summary="Health check for API availability",
     description="""
-    Returns the health status of the API.
+Returns the health status of the API.
 
-    Useful for:
+Useful for:
+- Readiness/liveness checks in production
+- Monitoring from orchestrators (e.g., Kubernetes)
 
-        - Readiness/liveness checks in production
-        - Monitoring from orchestrators (e.g., Kubernetes)
+### Response:
+``` json
+{
+"status": "healthy"
+}
+```
 
-    ### Response:
-    ```json
-    {
-    "status": "healthy"
-    }
-    This endpoint does not require authentication.""",
+This endpoint does not require authentication.""",
 )
 async def health_check():
     """
