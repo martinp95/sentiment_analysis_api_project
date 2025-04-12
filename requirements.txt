@@ -8,5 +8,5 @@ torch
 #nltk
 #spacy
 motor
-#loguru
+loguru
 #mlflow

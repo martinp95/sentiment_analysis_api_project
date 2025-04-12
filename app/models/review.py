@@ -16,12 +16,16 @@ class ReviewRequest(BaseModel):
 
     product_id: str = Field(
         ...,
+        min_length=3,
+        max_length=50,
         example="SKU-98765",
         description="Unique identifier for the product being reviewed.",
     )
 
     review: str = Field(
         ...,
+        min_length=10,
+        max_length=512,
         example="Absolutely loved the build quality and performance!",
         description="The full text of the user review.",
     )

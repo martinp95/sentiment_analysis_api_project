@@ -11,8 +11,12 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from app.api import health, sentiment, stats
 from app.core.config import settings
 from app.core.context import context
+from app.core.logger import configure_logger
 from app.core.security import API_KEY_NAME
 from app.db.mongo import get_mongo_client
+
+# Initialize logger
+logger = configure_logger(settings.log_level)
 
 
 @asynccontextmanager
@@ -30,8 +34,10 @@ async def lifespan(app: FastAPI):
     client: AsyncIOMotorClient = get_mongo_client()
     db = client[settings.db_name]
     context.db = db
+    logger.info("MongoDB connection established.")
 
     # Load ML model
+    logger.info(f"Loading model: {settings.model_name}")
     tokenizer = AutoTokenizer.from_pretrained(settings.model_name)
     model = AutoModelForSequenceClassification.from_pretrained(settings.model_name)
     model.eval()
@@ -40,10 +46,12 @@ async def lifespan(app: FastAPI):
     context.tokenizer = tokenizer
     context.model = model
     context.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    logger.info(f"Model loaded on device: {context.device}")
 
     yield
 
     client.close()
+    logger.info("MongoDB connection closed")
 
 
 def create_app() -> FastAPI:
