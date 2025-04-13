@@ -8,5 +8,6 @@ venv/
 # Testing
 .coverage
 htmlcov/
+.pytest_cache/
 
 .mypy_cache/
