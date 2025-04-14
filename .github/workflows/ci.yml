@@ -27,9 +27,6 @@ jobs:
       - name: Copy .env.example to .env
         run: cp .env.example .env
 
-      - name: Run tests
-        run: make test
-
       - name: Run coverage
         run: make coverage
 
