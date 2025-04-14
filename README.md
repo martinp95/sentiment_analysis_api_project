@@ -55,7 +55,50 @@ This project offers a clean, production-grade sentiment analysis API using moder
 
 ## 📁 Project Structure
 
-
+```
+sentiment_analysis_api_project/
+├── LICENSE
+├── Makefile
+├── README.md
+├── app
+│   ├── __init__.py
+│   ├── api
+│   │   ├── health.py
+│   │   ├── sentiment.py
+│   │   └── stats.py
+│   ├── core
+│   │   ├── config.py
+│   │   ├── context.py
+│   │   ├── exceptions.py
+│   │   ├── logger.py
+│   │   └── security.py
+│   ├── db
+│   │   └── mongo.py
+│   ├── main.py
+│   ├── models
+│   │   ├── health.py
+│   │   ├── review.py
+│   │   └── stats.py
+│   ├── repositories
+│   │   ├── review_repository.py
+│   │   └── stats_repository.py
+│   └── services
+│       ├── sentiment.py
+│       └── stats.py
+├── codecov.yml
+├── docker
+│   ├── Dockerfile
+│   └── docker-compose.yaml
+├── pyproject.toml
+├── requirements-dev.txt
+├── requirements.txt
+└── tests
+    ├── __init__.py
+    ├── api
+    │   ├── test_health.py
+    │   └── test_stats.py
+    └── utils.py
+```
 ---
 
 ## 🔧 Setup & Usage
