@@ -6,7 +6,7 @@ codecov:
 coverage:
   precision: 2
   round: down
-  range: 40..60
+  range: 40..55
 
 comment:
   layout: "reach, diff, flags, files"
